@@ -58,11 +58,3 @@ function love.run()
         if love.timer then love.timer.sleep(0.001) end
     end
 end
-
--- function love.load()
---     
--- end
-
--- function love.draw()
---     love.graphics.draw(image, math.random(0, 800), math.random(0, 600))
--- end
