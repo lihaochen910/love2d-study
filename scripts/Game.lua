@@ -28,8 +28,15 @@ function Game:__init() --INITIALIZATION
 	self.developerMode = false
 	self.layers        = {}
 	self.gfx           = { w = 640, h = 480, viewportRect = {0,0,640,480} }
-	self.time          = 0
-	self.frame 		   = 0
+    
+    self.rate          = 0.0167 --Limits the number of calls to love.update, The default is 60 ticks per second. 
+    self.frame	       = 0      --love.draw call count.
+    self.framerate     = -1     --For example, setting framerate to 60 will limit the number of calls to love.draw to 60 per second.
+    self.timescale     = 1
+    self.sleep         = 0.001
+    self.dt            = 0
+    self.accum         = 0
+    self.tick          = 1      --love.update call count.
 
 	self.defaultLayer = nil
 
@@ -100,4 +107,5 @@ end
 function Game:draw()
     -- love.graphics.draw(image, math.random(0, 800), math.random(0, 600))
     if currentRoom then currentRoom:draw() end
+    love.graphics.print(string.format('%.1f', 1 / self.rate), WINDOW_WIDTH - 29, 0)
 end
