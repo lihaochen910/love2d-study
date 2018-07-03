@@ -1,9 +1,18 @@
 require 'scripts/Class'
 local Input = require 'scripts/Input'
+Timer = require 'scripts/hump/timer'
+Camera = require 'scripts/hump/camera'
+require 'scripts/Room'
+require 'scripts/Area'
+require 'scripts/GameObjectTest'
+require 'scripts/Stage'
 
 --------------------------------------------------------------------
 CLASS: Game()
-	
+
+local rooms = {}
+local currentRoom = false
+local timer
 --------------------------------------------------------------------
 function Game:__init() --INITIALIZATION
 	self.initialized          = false
@@ -24,49 +33,71 @@ function Game:__init() --INITIALIZATION
 
 	self.defaultLayer = nil
 
-    self.windowWidth = 800
-    self.windowHeight = 600
-	self.windowFlags = {
-        fullscreen = false,
-        fullscreentype = 'desktop',
-        vsync = true,
-        msaa = 0,
-        resizable = false,
-        borderless = false,
-        centered = true,
+    -- self.windowWidth = 800
+    -- self.windowHeight = 600
+	-- self.windowFlags = {
+    --     fullscreen = false,
+    --     fullscreentype = 'desktop',
+    --     vsync = true,
+    --     msaa = 0,
+    --     resizable = false,
+    --     borderless = false,
+    --     centered = true,
 
-        display = 1,
+    --     display = 1,
 
-        minwidth = 1,
-        minheight = 1,
+    --     minwidth = 1,
+    --     minheight = 1,
 
-        highdpi = false,
-        x = nil,
-        y = nil
-    }
+    --     highdpi = false,
+    --     x = nil,
+    --     y = nil
+    -- }
 
-    love.window.setTitle('Game')
-    love.window.setMode(self.windowWidth, self.windowHeight, self.windowFlags)
+    -- love.window.setTitle('Game')
+    -- love.window.setMode(self.windowWidth, self.windowHeight, self.windowFlags)
 
     self:init()
 end
 
 function Game:init()
     self.input = Input()
-    self.input:bind('return', 'left_click')
-    self.input:bind('mouse1', function() print('mouse1') end)
+    -- self.input:bind('return', 'left_click')
+    timer = Timer()
+    camera = Camera()
+
+    self.input:bind('f3', function() camera:shake(4, 1, 60) end)
 end
 
 function Game:onLoad()
-    image = love.graphics.newImage('res/image.jpg')
+    -- image = love.graphics.newImage('res/image.jpg')
+    rooms[0] = Stage()
+
+    currentRoom = rooms[0]
+
+    -- area_1 = Area(currentRoom)
+
+    -- currentRoom:addArea(area_1)
+
+    -- timer:every(0.16, function(f)
+    --     local circleObject = Circle(area_1)
+
+    --     local w, h = love.graphics.getDimensions()
+    --     circleObject.offw = math.random(0, w)
+    --     circleObject.offh = math.random(0, h)
+
+    --     area_1:addGameObject(circleObject)
+    -- end)
+
 end
 
 function Game:update(dt)
-    if self.input:pressed('left_click') then
-        print(dt)
-    end
+    if currentRoom then currentRoom:update(dt) end
+    timer:update(dt)
+    camera:update(dt)
 end
 
 function Game:draw()
-    love.graphics.draw(image, math.random(0, 800), math.random(0, 600))
+    -- love.graphics.draw(image, math.random(0, 800), math.random(0, 600))
+    if currentRoom then currentRoom:draw() end
 end
