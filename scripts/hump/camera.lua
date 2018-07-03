@@ -42,7 +42,8 @@ function Shake:new(amplitude, frequency, duration)
 
     self.start_time = love.timer.getTime()*1000
     self.t = 0
-    self.shaking = true
+	self.shaking = true
+	return self
 end
 
 function Shake:update(dt)
