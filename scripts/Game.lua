@@ -1,7 +1,7 @@
 require 'scripts/Class'
 local Input = require 'scripts/Input'
 Timer = require 'scripts/hump/timer'
-Camera = require 'scripts/hump/camera'
+local Camera = require 'scripts/hump/camera'
 require 'scripts/Room'
 require 'scripts/Area'
 require 'scripts/GameObjectTest'
@@ -28,7 +28,7 @@ function Game:__init() --INITIALIZATION
 	self.developerMode = false
 	self.layers        = {}
 	self.gfx           = { w = 640, h = 480, viewportRect = {0,0,640,480} }
-    
+
     self.rate          = 0.0167 --Limits the number of calls to love.update, The default is 60 ticks per second. 
     self.frame	       = 0      --love.draw call count.
     self.framerate     = -1     --For example, setting framerate to 60 will limit the number of calls to love.draw to 60 per second.
@@ -73,7 +73,7 @@ function Game:init()
     timer = Timer()
     camera = Camera()
 
-    self.input:bind('f3', function() camera:shake(4, 1, 60) end)
+    self.input:bind('f3', function() camera:shake(4, 60, 1) end)
 end
 
 function Game:onLoad()
@@ -82,24 +82,25 @@ function Game:onLoad()
 
     currentRoom = rooms[0]
 
-    -- area_1 = Area(currentRoom)
+    area_1 = Area(currentRoom)
 
-    -- currentRoom:addArea(area_1)
+    currentRoom:addArea(area_1)
 
-    -- timer:every(0.16, function(f)
-    --     local circleObject = Circle(area_1)
+    timer:every(0.16, function(f)
+        local circleObject = Circle(area_1)
 
-    --     local w, h = love.graphics.getDimensions()
-    --     circleObject.offw = math.random(0, w)
-    --     circleObject.offh = math.random(0, h)
+        local w, h = love.graphics.getDimensions()
+        circleObject.offw = math.random(0, w)
+        circleObject.offh = math.random(0, h)
 
-    --     area_1:addGameObject(circleObject)
-    -- end)
-
+        area_1:addGameObject(circleObject)
+    end)
+    
 end
 
 function Game:update(dt)
     if currentRoom then currentRoom:update(dt) end
+    self.input:update()
     timer:update(dt)
     camera:update(dt)
 end

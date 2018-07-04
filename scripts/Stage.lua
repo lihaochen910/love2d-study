@@ -9,6 +9,7 @@ function Stage:__init()
 end
 
 function Stage:update(dt)
+    self.area:update(dt)
     -- camera:follow(WINDOW_WIDTH/2, WINDOW_HEIGHT/2)
 end
 

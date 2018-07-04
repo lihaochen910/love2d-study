@@ -506,9 +506,10 @@ local function affirmClass( t, id )
 			local clas0 = globalClassRegistry[ clas.__fullname ]
 			if clas0  then
 				_error( 'duplicated class:', clas.__fullname )
+				print('call hotload()? duplicated class:'..clas.__fullname)
 				print( '-->from:',clas.__definetraceback )
 				print( '-->first defined here:',clas0.__definetraceback )
-
+				-- error('<duplicated class>')
 			end
 			globalClassRegistry[ clas.__fullname ] = clas
 			return clas

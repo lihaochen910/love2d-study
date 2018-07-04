@@ -7,8 +7,10 @@ function Room:__init()
 end
 
 function Room:update(dt)
-    for _, area in ipairs(self.areas) do
-        area:update(dt)
+    if self.areas then
+        for _, area in ipairs(self.areas) do
+            area:update(dt)
+        end
     end
 end
 

@@ -28,3 +28,4 @@ end
 
 function GameObject:update(dt) end
 function GameObject:draw() end
+function GameObject:onDestroy() end
