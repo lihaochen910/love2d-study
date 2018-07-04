@@ -82,7 +82,7 @@ function Game:onLoad()
 
     currentRoom = rooms[0]
 
-    area_1 = Area(currentRoom)
+    area_1 = rooms[0].area
 
     currentRoom:addArea(area_1)
 
@@ -108,5 +108,5 @@ end
 function Game:draw()
     -- love.graphics.draw(image, math.random(0, 800), math.random(0, 600))
     if currentRoom then currentRoom:draw() end
-    love.graphics.print(string.format('%.1f', 1 / self.rate), WINDOW_WIDTH - 29, 0)
+    love.graphics.print(string.format('%.1f', love.timer.getFPS()), WINDOW_WIDTH - 29, 0)
 end
