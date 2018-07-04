@@ -1,7 +1,6 @@
 require 'scripts/Class'
 local Input = require 'scripts/Input'
 Timer = require 'scripts/hump/timer'
-local Camera = require 'scripts/hump/camera'
 require 'scripts/Room'
 require 'scripts/Area'
 require 'scripts/GameObjectTest'
@@ -21,10 +20,10 @@ function Game:__init() --INITIALIZATION
 	self.focused              = false
 
 	self.prevUpdateTime = 0
-	self.prevClock = 0
+	self.prevClock     = 0
 
-	self.version = "0.1"
-	self.editorMode = false
+	self.version       = "0.1"
+	self.editorMode    = false
 	self.developerMode = false
 	self.layers        = {}
 	self.gfx           = { w = 640, h = 480, viewportRect = {0,0,640,480} }
@@ -38,7 +37,7 @@ function Game:__init() --INITIALIZATION
     self.accum         = 0
     self.tick          = 1      --love.update call count.
 
-	self.defaultLayer = nil
+	self.defaultLayer  = nil
 
     -- self.windowWidth = 800
     -- self.windowHeight = 600
@@ -68,12 +67,12 @@ function Game:__init() --INITIALIZATION
 end
 
 function Game:init()
-    self.input = Input()
-    -- self.input:bind('return', 'left_click')
+    input = Input()
+    input:bind('left', 'left')
+    input:bind('right', 'right')
     timer = Timer()
-    camera = Camera()
 
-    self.input:bind('f3', function() camera:shake(4, 60, 1) end)
+    input:bind('f3', function() camera:shake(4, 60, 1) end)
 end
 
 function Game:onLoad()
@@ -86,23 +85,23 @@ function Game:onLoad()
 
     currentRoom:addArea(area_1)
 
-    timer:every(0.16, function(f)
-        local circleObject = Circle(area_1)
+    -- timer:every(0.16, function(f)
+    --     local circleObject = Circle(area_1)
 
-        local w, h = love.graphics.getDimensions()
-        circleObject.offw = math.random(0, w)
-        circleObject.offh = math.random(0, h)
+    --     local w, h = love.graphics.getDimensions()
+    --     circleObject.offw = math.random(0, w)
+    --     circleObject.offh = math.random(0, h)
 
-        area_1:addGameObject(circleObject)
-    end)
+    --     area_1:addGameObject(circleObject)
+    -- end)
     
 end
 
 function Game:update(dt)
     if currentRoom then currentRoom:update(dt) end
-    self.input:update()
+    input:update()
     timer:update(dt)
-    camera:update(dt)
+    
 end
 
 function Game:draw()
