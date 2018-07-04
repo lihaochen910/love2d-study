@@ -18,15 +18,13 @@ function Circle:__init()
 end
 
 function Circle:update(dt)
-    print('circle update()')
     self.timer:update(dt)
 end
 
 function Circle:draw()
-    print('circle draw()')
     love.graphics.circle('line', self.x + self.offw, self.y + self.offh, self.r)
 end
 
 function Circle:onDestroy()
-    print('circle destroy')
+    
 end
