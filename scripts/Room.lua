@@ -16,12 +16,10 @@ end
 
 function Room:draw()
     for _, area in ipairs(self.areas) do
-        -- print('Room:draw() %d', _)
         area:draw()
     end
 end
 
 function Room:addArea(area)
     table.insert(self.areas, area)
-    print 'addArea to Room.'
 end
