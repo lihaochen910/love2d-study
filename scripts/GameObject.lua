@@ -21,6 +21,7 @@ function GameObject:__init(area, x, y, opts)
     self.area = area
     self.x, self.y = x or 0, y or 0
     self.id = UUID()
+    self.timer = Timer()
     self.dead = false
 end
 

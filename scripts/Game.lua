@@ -11,7 +11,6 @@ CLASS: Game()
 
 local rooms = {}
 local currentRoom = false
-local timer
 --------------------------------------------------------------------
 function Game:__init() --INITIALIZATION
 	self.initialized          = false
@@ -70,7 +69,7 @@ function Game:init()
     input = Input()
     input:bind('left', 'left')
     input:bind('right', 'right')
-    timer = Timer()
+    Game.timer = Timer()
 
     input:bind('f3', function() camera:shake(4, 60, 1) end)
     input:bind('f1', function()
@@ -109,7 +108,7 @@ end
 function Game:update(dt)
     if currentRoom then currentRoom:update(dt) end
     input:update()
-    timer:update(dt)
+    Game.timer:update(dt)
 end
 
 function Game:draw()
