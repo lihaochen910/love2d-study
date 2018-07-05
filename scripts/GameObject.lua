@@ -1,5 +1,3 @@
-require 'scripts/Class'
-
 CLASS: GameObject()
 
 local function UUID()
@@ -26,6 +24,15 @@ function GameObject:__init(area, x, y, opts)
     self.dead = false
 end
 
-function GameObject:update(dt) end
+function GameObject:update(dt)
+    if self.timer then self.timer:update(dt) end
+    if self.collider then self.x, self.y = self.collider:getPosition() end
+end
+
 function GameObject:draw() end
+function GameObject:destroy()
+    self.dead = true
+    self:onDestroy()
+    self = nil
+end
 function GameObject:onDestroy() end

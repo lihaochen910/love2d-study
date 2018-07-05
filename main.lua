@@ -1,6 +1,7 @@
-inspect = require 'scripts/inspect'
+inspect = require 'scripts/lib/inspect'
 require 'scripts/lib/lovedebug'
 require 'scripts/Game'
+require 'scripts/Class'
 
 -- local json = require 'scripts/lib/dkjson'
 -- local debuggee = require 'scripts/lib/vscode-debuggee'

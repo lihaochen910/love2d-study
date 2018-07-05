@@ -1,4 +1,3 @@
-require 'scripts/Class'
 local windfield = require 'scripts/lib/windfield/init'
 
 CLASS: Area()
@@ -16,7 +15,7 @@ function Area:update(dt)
         game_object:update(dt)
         if game_object.dead then
             table.remove(self.game_objects, _)
-            game_object:onDestroy()
+            game_object:destroy()
         end
     end
 end
@@ -38,4 +37,18 @@ end
 
 function Area:addPhysicsWorld()
     self.world = windfield.newWorld(0, 0, true)
+end
+
+function Area:destroy()
+    for i = #self.game_objects, 1, -1 do
+        local go = self.game_objects[i]
+        go:destroy()
+        table.remove(self.game_objects, i)
+    end
+    self.game_objects = nil
+
+    if self.world then
+        self.world:destroy()
+        self.world = nil
+    end
 end

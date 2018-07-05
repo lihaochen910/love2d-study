@@ -10,12 +10,14 @@ function Stage:__init()
     self.area:addPhysicsWorld()
     self.main_canvas = love.graphics.newCanvas()
     camera = Camera()
+
     player = Player(self.area, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
+
+    self.area:addGameObject(player)
 end
 
 function Stage:update(dt)
     self.area:update(dt)
-    player:update(dt)
     camera:update(dt)
     camera.smoother = Camera.smooth.damped(5)
     camera:lockPosition(dt, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
@@ -35,4 +37,9 @@ function Stage:draw()
     love.graphics.setBlendMode('alpha', 'premultiplied')
     love.graphics.draw(self.main_canvas, 0, 0, 0, sx, sy)
     love.graphics.setBlendMode('alpha')
+end
+
+function Stage:destroy()
+    self.area:destroy()
+    self.area = nil
 end
